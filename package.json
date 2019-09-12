@@ -1,0 +1,33 @@
+{
+  "name": "genesis",
+  "version": "0.0.0",
+  "description": "A typescript class-based discord bot",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "start:dev": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brady-miller/Genesis.git"
+  },
+  "author": "Brady Miller",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brady-miller/Genesis/issues"
+  },
+  "homepage": "https://github.com/brady-miller/Genesis#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.5",
+    "nodemon": "^1.19.2",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.3"
+  }
+}
