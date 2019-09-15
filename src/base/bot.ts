@@ -1,12 +1,17 @@
 import { Client, Collection, ClientOptions, DiscordAPIError } from 'discord.js';
-import { readdir } from 'fs';
+import { readdir, fstat } from 'fs';
 import IOptions from '../types/IOptions';
 import IConfig from '../types/IConfig';
 import IPerms from '../types/IPerms';
+import Command from './command';
+import Event from './event';
 
-export default class Genesis extends Client {
-    public commands: Collection<any, any>;
-    public aliases: Collection<any, any>;
+/**
+ * The modified discord client
+ */
+export default class Bot extends Client {
+    public commands: Collection<string, Command>;
+    public aliases: Collection<string, String>;
     public config?: IConfig;
     public perms: IPerms;
 
@@ -59,45 +64,67 @@ export default class Genesis extends Client {
     }
 
     /**
-     * Loads all commands in the specified directory
-     * @param {string} path The path where the commands are contained
+     * Loads all commands in the specified directory as listeners
+     * @param {String} path The path where the commands are contained
+     * @returns Promise<void>
      */
     public async loadCommands(path: string) {
-        // Reads all files in specified path
-        await readdir(path, (err, files) => {
-            // Breaks callback and logs error if error occurs
-            if (err) return console.log(err);
+        return new Promise((resolve, reject) => {
+            readdir('./dist/' + path, async (error, files) => {
+                // Check for errors
+                if (error) return reject(error);
 
-            files.forEach(cmd => {
-                // Imports command into 'command' variable
-                const command = new (require(`../${path}/${cmd}`))(this);
+                // Loop through files
+                for (let file of files) {
+                    // Check if file isn't js (eg .js.map, etc)
+                    if (!file.endsWith(".js")) continue;
+                    // Import the file
+                    const imported = await import(`../${path}/${file}`)
+                    // Initialize the command
+                    const command:Command = new imported.default(this);
 
-                // Enters the command into the commands collection
-                this.commands.set(command.help.name, command);
+                    // Add to collection
+                    this.commands.set(command.name, command);
+                    command.aliases.forEach(alias => this.aliases.set(alias, command.name));
 
-                // Sets command aliases in aliases collection
-                command.conf.aliases.forEach((alias: string[]) => this.aliases.set(alias, command.help.name))
-            });
-        });
+                    console.log(`Command '${command.name}' is now loaded!`);
+                }
 
-        return this;
+                console.log('All commands have been initalized')
+                // Resolve the promise
+                return resolve();
+            })
+        })
     }
 
     /**
      * Loads all events in specified directory
      * @param {string} path The path where the events are located
      */
-    public async loadEvents(path: string) {
-        await readdir(path, (err, files) => {
-            if (err) return console.log(err);
+    public async loadEvents(path: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            // Read directory from dist
+            readdir('./dist/' + path, async (error, files) => {
+                // Checks for errors
+                if (error) return reject(error);
 
-            files.forEach(evt => {
-                const event = new (require(`../${path}/${evt}`))(this);
+                // Loop through all files
+                for (let file of files) {
+                    // Check if file isn't js
+                    if (!file.endsWith('.js')) continue;
+                    // Import the file
+                    const imported = await import(`../${path}/${file}`);
+                    // Initalize the event
+                    const event: Event = new imported.default(this);
 
-                super.on(evt.split(".")[0], (...args: any[]) => event.run(...args));
-            })
-        });
+                    // Add the listener
+                    this.on(event.name, (...args: any) => event._run(...args));
+                    console.log(`Event '${event.name}' has been initalized!`);
+                };
 
-        return this;
+                console.log('All events have been initalized!');
+                resolve();
+            });
+        })
     }
 }
