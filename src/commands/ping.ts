@@ -19,10 +19,12 @@ export default class Ping extends Command {
     }
 
     async run(message: Message): Promise<Message> {
-        const reply = await message.channel.send('Pinging...');
-
-        // @ts-ignore
-        return reply.edit(`**Ping:** ${reply.createdTimestamp - message.createdTimestamp}`)
+        try {
+            const reply: Message = await message.channel.send('Pinging...') as Message;
+            return reply.edit(`**Ping:** ${reply.createdTimestamp - message.createdTimestamp} ms`)
+        } catch (error) {
+            return await message.channel.send('Unknown Error Occured') as Message;
+        }
 
     }
 }

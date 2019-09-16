@@ -3,7 +3,6 @@ import { Message, PermissionResolvable } from 'discord.js';
 
 // Command Handler function
 export default (bot: Bot, message: Message) => {
-    console.log('boom')
     // Split message arguments by spaces
     const args = message.content.split(/\s+/g);
     // The command name executed

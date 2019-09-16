@@ -28,7 +28,7 @@ class Event {
     async addHandler(name: string, func: Function): Promise<void> {
         this.handlers.push({
             condition: func,
-            run: (await import(`../helpers/${name}.js`)).default
+            run: (await import(`../helpers/${name}`)).default
         });
 
         return;
