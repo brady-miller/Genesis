@@ -6,6 +6,7 @@ import IPerms from '../types/IPerms';
 import Command from './command';
 import Event from './event';
 import Path from 'path';
+import Logger from '../util/Logger';
 
 /**
  * The modified discord client
@@ -49,7 +50,7 @@ export default class Bot extends Client {
          */
         this.perms = options.perms ? require(`../../${options.perms}`) : {};
 
-        console.log(`Client initialized. You are using node version ${process.version}`);
+        Logger.log(`Client initialized. You are using node version ${process.version}`);
     }
 
     /**
@@ -88,10 +89,10 @@ export default class Bot extends Client {
                     this.commands.set(command.name, command);
                     command.aliases.forEach(alias => this.aliases.set(alias, command.name));
 
-                    console.log(`Command '${command.name}' is now loaded!`);
+                    Logger.cmd(`Command '${command.name}' is now loaded!`);
                 }
 
-                console.log('All commands have been initalized')
+                Logger.log('All commands have been initalized')
                 // Resolve the promise
                 return resolve();
             })
@@ -120,10 +121,10 @@ export default class Bot extends Client {
 
                     // Add the listener
                     this.on(event.name, (...args: any) => event._run(...args));
-                    console.log(`Event '${event.name}' has been initalized!`);
+                    Logger.cmd(`Event '${event.name}' has been initalized!`);
                 };
 
-                console.log('All events have been initalized!');
+                Logger.log('All events have been initalized!');
                 resolve();
             });
         })
