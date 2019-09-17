@@ -43,7 +43,7 @@ class Command {
 /**
  * Interface for the command
  */
-/*
+
 interface Command {
     bot: Bot;
 
@@ -59,7 +59,7 @@ interface Command {
     dmsEnabled: boolean;
 
     message?: Message;
-}*/
+}
 
 /**
  * Interface for the command options

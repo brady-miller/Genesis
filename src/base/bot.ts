@@ -129,4 +129,24 @@ export default class Bot extends Client {
             });
         })
     }
+
+    /**
+     * This removes tokens, @everyone pings, and escapes code blocks,
+     * as well as resolving promises, and stringifying objects,
+     * courtesy of Guidebot
+     * @param {string} text The text to clean
+     */
+    public async clean(text: string) {
+        if (text && text.constructor.name == "Promise")
+            text = await text;
+        if (typeof text !== "string")
+            text = require("util").inspect(text, { depth: 1 });
+    
+        text = text
+            .replace(/`/g, "`" + String.fromCharCode(8203))
+            .replace(/@/g, "@" + String.fromCharCode(8203))
+            .replace(this.config!.token, "mfa.VkO_2G4Qv3T--NO--lWetW_tjND--TOKEN--QFTm6YGtzq9PH--4U--tG0");
+    
+        return text;
+    }
 }
