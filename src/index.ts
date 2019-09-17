@@ -1,5 +1,5 @@
 // Imports the bot class
-import Genesis from './base/bot';
+import Genesis from './base/Bot';
 import botConfig from './util/config';
 
 // Initialize the bot

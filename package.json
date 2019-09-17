@@ -24,7 +24,8 @@
     "chalk": "^2.4.2",
     "discord.js": "^11.5.1",
     "dotenv": "^8.1.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "moment-duration-format": "^2.3.2"
   },
   "devDependencies": {
     "@types/node": "^12.7.5",
@@ -35,13 +36,13 @@
   },
   "nodemonConfig": {
     "ignore": [
-    "**/*.test.ts",
-    "**/*.spec.ts",
-    ".git",
-    "node_modules"
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
     ],
     "watch": [
-    "src"
+      "src"
     ],
     "exec": "npm run start:ts",
     "ext": "ts"

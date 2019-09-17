@@ -1,4 +1,4 @@
-import Bot from './bot';
+import Bot from './Bot';
 import { Message, MessageEmbed } from 'discord.js';
 
 /**

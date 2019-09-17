@@ -1,5 +1,5 @@
-import Bot from '../base/bot';
-import Event from '../base/event';
+import Bot from '../base/Bot';
+import Event from '../base/Event';
 import Logger from '../util/Logger';
 
 export default class Ready extends Event {

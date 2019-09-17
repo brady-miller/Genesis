@@ -1,4 +1,4 @@
-import Bot from './bot';
+import Bot from './Bot';
 
 /**
  * Represents a Discord Socket Event

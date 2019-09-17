@@ -1,5 +1,5 @@
-import Command from "../base/command";
-import Bot from "../base/bot";
+import Command from "../base/Command";
+import Bot from "../base/Bot";
 import { Message } from "discord.js";
 import Logger from '../util/Logger';
 

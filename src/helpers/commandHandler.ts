@@ -1,4 +1,4 @@
-import Bot from '../base/bot';
+import Bot from '../base/Bot';
 import { Message, PermissionResolvable } from 'discord.js';
 
 // Command Handler function

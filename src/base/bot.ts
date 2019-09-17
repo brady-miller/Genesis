@@ -3,8 +3,8 @@ import { readdir, fstat } from 'fs';
 import IOptions from '../types/IOptions';
 import IConfig from '../types/IConfig';
 import IPerms from '../types/IPerms';
-import Command from './command';
-import Event from './event';
+import Command from './Command';
+import Event from './Event';
 import Path from 'path';
 import Logger from '../util/Logger';
 
