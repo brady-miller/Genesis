@@ -13,6 +13,7 @@ export default (bot: Bot, message: Message) => {
 
     if (message.guild) {
         // Checks if user and bot have permissions required by command
+        if (command.userPerms.includes('BOT_OWNER') && message.author.id !== bot.config!.ownerID) return false; 
         if (command.userPerms.some((p: PermissionResolvable) => !message.member.permissions.has(p))) return false;
         if (command.botPerms.some((p: PermissionResolvable) => !message.guild.me.permissions.has(p))) return false;
     } else if (!command.allowDMs) return false; // Checks if DMs are allowed by the command

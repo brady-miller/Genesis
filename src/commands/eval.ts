@@ -23,9 +23,6 @@ export default class Eval extends Command {
         const code: string = args.join(" ")
 
         try {
-            if (message.author.id !== this.bot.config!.ownerID) {
-                return await message.channel.send('ERROR: You are not authorized to perform this command') as Message;
-            };
             const evaled = eval(code);
             const cleaned = await this.bot.clean(evaled);
             const MAX_CHARS: number = 3 + 2 + cleaned.length + 3;
